@@ -1,0 +1,96 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin: 0;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+h1 {
+    color: #ffffff;
+    text-align: center;
+    width: 100%;
+    text-align: center;
+}
+.content {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: rgba(128, 128, 128, 0.8);
+}
+.content-body{
+    margin: 10px;
+    margin-top: 20px;
+    position: relative;
+    width: calc(100% / 6);
+    height: 250px;
+    overflow: hidden;
+}
+form {
+    padding: 40px 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgb(46, 46, 46);
+}
+.page {
+    margin-left: 5px;
+    padding: 8px 15px;
+    background-color: #bebebe;
+    border-radius: 5px;
+}
+
+.pages {
+    width: 100%;
+    text-align: center;
+    background-color: rgb(80, 80, 80);
+    padding: 40px 0;
+}
+
+.pages span {
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: #057bff;
+}
+input, select {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #e1e4e8;
+    color: #8f8f8f;
+}
+input:focus, select:focus {
+    outline: none;
+}
+
+.button {
+    padding: 11px 45px;
+    background-color: #057bff;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+h4, p {
+    margin: 10px 0 5px 10px;
+}
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .6);
+    width: 100%;
+    color: #ffffff;
+}
+.available {
+    height: 100%;
+}
