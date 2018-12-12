@@ -1,76 +1,92 @@
 (function () {
 
-    $('button').on('click', function (e) {
+    $('#button').on('click', function (e) {
         e.preventDefault();
+        Search();
+    });
+
+    $('#prev').hide();
+    $('#next').hide();
+
+    let numberPage = parseInt($('#page').val());
+
+    $('#prev').on('click', function(){
+        $('#page').val(numberPage -= 1);
+        Search();
+    });
+    
+    $('#next').on('click', function(){
+        $('#page').val(numberPage += 1);
         Search();
     });
     
 })();
-
-// Проверка высоты блока CONTENT
-function checkHeigth() {
-    var height = $('.content').height();
-    if(height > 0){
-        $('.content').css("padding", "40px 0")
-    }
-}
-
 
 function Search(url) {
     $('.content').html('');
 
     var url = 'http://www.omdbapi.com/?' + $('form').serialize();
     
-    // Проверка на пустое значение
-    var search = $('#search').val();
+    let search = $('#search').val();
+
     if (search === '') {
         let h1 = document.createElement('h1');
         $(h1).html('No results found');
+        $('.content').show();
         $('.content').append($(h1));
+        $('.pages').hide();
     }
-
+    
     $.get(url, function (data) {
-        // var total = Math.ceil(parseInt(data.totalResults));
-        // $('.pages').html('');
-        
-        // for (i = 1; i < total / 10; i++) {
-        //     var counter = document.createElement('a');
-        //     $(counter).addClass('page').attr('data-page', i).html(i);
-        //     $('.pages').append($(counter))
-        // }
-        for (i = 0; i <= data.Search.length; i++) {
-            checkHeigth();
-            
-            // Создание элементов
-            let row = document.createElement('div');
-            let img = document.createElement('img');
-            let overlay = document.createElement('div');
-            let title = document.createElement('h4');
-            let year = document.createElement('p');
+        let page = parseInt($('#page').val());
+        let total = Math.ceil(parseInt(data.totalResults) / 10);
 
-            // Операции над элементами
-            $(row).addClass('content-body');
-            $(overlay).addClass('overlay');
-            if(data.Search[i].Poster !== 'N/A'){
-                $(img).attr('src', data.Search[i].Poster);
-            } else {
-                $(img).attr('src', './img/photo-available.png').addClass('available');
-            }
-            $(title).html(data.Search[i].Title);
-            $(year).html(data.Search[i].Year);
-
-            // Добавление элементов в DOM
-            $('.content').append($(row));
-            $(row).append($(img));
-            $(row).append($(overlay));
-            $(overlay).append($(title));
-            $(overlay).append($(year));
+        if (page === 1) {
+            $('#prev').prop('disabled', true);
+            $('#prev').css('opacity', '0.5');
+        } else if (page > total - 1) {
+            $('#next').prop('disabled', true);
+            $('#next').css('opacity', '0.5');
+        } else {
+            $('#prev').prop('disabled', false);
+            $('#prev').css('opacity', '1');
+            $('#next').prop('disabled', false);
+            $('#next').css('opacity', '1');
         }
 
+        if(data.totalResults > 0){
+            $('.content').css('display', 'flex');
+            $('.content').show();
+            $('.pages').show();
+            $('#prev').show();
+            $('#next').show();
+            for (i = 0; i < data.Search.length; i++) {
+                let row = document.createElement('div');
+                let img = document.createElement('img');
+                let overlay = document.createElement('div');
+                let title = document.createElement('h4');
+                let year = document.createElement('p');
+    
+                $(row).addClass('content-body');
+                $(overlay).addClass('overlay');
+                if(data.Search[i].Poster !== 'N/A'){
+                    $(img).attr('src', data.Search[i].Poster);
+                } else {
+                    $(img).attr('src', './img/photo-available.png').addClass('available');
+                }
+                $(title).html(data.Search[i].Title);
+                $(year).html(data.Search[i].Year);
+                $('.content').append($(row));
+                $(row).append($(img));
+                $(row).append($(overlay));
+                $(overlay).append($(title));
+                $(overlay).append($(year));
+            }
+           
+        }
     }).fail(function () {
         console.log('Возникла ошибка');
     });
-    
 }
 
 
